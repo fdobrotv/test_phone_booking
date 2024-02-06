@@ -1,0 +1,1289 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Test phone booking
+  license:
+    name: MIT
+servers:
+  - url: http://127.0.0.1/v1
+  - url: https://fdobrotv.com/v1
+paths:
+  /roles:
+    get:
+      summary: List all roles
+      operationId: listRoles
+      tags:
+        - roles
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+      responses:
+        '200':
+          description: A paged array of roles
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Roles"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a role
+      operationId: createRole
+      tags:
+        - roles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RoleIn"
+      responses:
+        '201':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Role"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /roles/{id}:
+    get:
+      summary: Info for a specific role
+      operationId: getRoleById
+      tags:
+        - roles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to retrieve
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Role"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete specific role by id
+      operationId: deleteRoleById
+      tags:
+        - roles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Resource deleted successfully
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users:
+    get:
+      summary: List all users
+      operationId: listUsers
+      tags:
+        - users
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+      responses:
+        '200':
+          description: A paged array of users
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a user
+      operationId: createUser
+      tags:
+        - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserIn"
+      responses:
+        '201':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/{id}:
+    get:
+      summary: Info for a specific user
+      operationId: getUserById
+      tags:
+        - users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to retrieve
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete specific user by id
+      operationId: deleteUserById
+      tags:
+        - users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Resource deleted successfully
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /phones:
+    get:
+      summary: List all phones
+      operationId: listPhones
+      tags:
+        - phones
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+      responses:
+        '200':
+          description: A paged array of phones
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Phones"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a phone
+      operationId: createPhone
+      tags:
+        - phones
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhoneIn"
+      responses:
+        '201':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Phone"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /phones/{id}:
+    get:
+      summary: Info for a specific phone
+      operationId: getPhoneById
+      tags:
+        - phones
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to retrieve
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Phone"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete specific phone by id
+      operationId: deletePhoneById
+      tags:
+        - phones
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Resource deleted successfully
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /specificPhones:
+    get:
+      summary: List all specific phones
+      operationId: listSpecificPhones
+      tags:
+        - specificPhones
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+            default: 50
+      responses:
+        '200':
+          description: A paged array of specific phones
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecificPhones"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a specific phone
+      operationId: createSpecificPhone
+      tags:
+        - specificPhones
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SpecificPhoneIn"
+      responses:
+        '201':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecificPhone"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /specificPhones/{id}:
+    get:
+      summary: Info about a "specific phone" by id
+      operationId: getSpecificPhoneById
+      tags:
+        - specificPhones
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to retrieve
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecificPhone"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete "specific phone" by id
+      operationId: deleteSpecificPhoneById
+      tags:
+        - specificPhones
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Resource deleted successfully
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /specificPhones:book:
+    post:
+      summary: Book a "specific phone" by id
+      operationId: bookSpecificPhoneById
+      tags:
+        - specificPhones
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SpecificPhoneBookIn"
+      responses:
+        '201':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecificPhoneBook"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /specificPhones:return:
+    post:
+      summary: Return a "specific phone" by id
+      operationId: returnSpecificPhoneById
+      tags:
+        - specificPhones
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SpecificPhoneReturnIn"
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecificPhoneBook"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /phoneModels:
+    get:
+      summary: List all phone models
+      operationId: listPhoneModels
+      tags:
+        - phoneModels
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+            default: 50
+      responses:
+        '200':
+          description: A paged array of phone models
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneModels"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a phone model
+      operationId: createPhoneModel
+      tags:
+        - phoneModels
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhoneModelIn"
+      responses:
+        '201':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneModel"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /phoneModels/{id}:
+    get:
+      summary: Info for a specific phone model
+      operationId: getPhoneModelById
+      tags:
+        - phoneModels
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to retrieve
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneModel"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete specific phone model by id
+      operationId: deletePhoneModelById
+      tags:
+        - phoneModels
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Resource deleted successfully
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /phoneMarks:
+    get:
+      summary: List all phoneMarks
+      operationId: listPhoneMarks
+      tags:
+        - phoneMarks
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+            default: 50
+      responses:
+        '200':
+          description: A paged array of phone marks
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneMarks"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a phone mark
+      operationId: createPhoneMark
+      tags:
+        - phoneMarks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhoneMarkIn"
+      responses:
+        '201':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneMark"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /phoneMarks/{id}:
+    get:
+      summary: Info for a specific phone mark
+      operationId: getPhoneMarkById
+      tags:
+        - phoneMarks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to retrieve
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhoneMark"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete specific phone by id
+      operationId: deletePhoneMarkById
+      tags:
+        - phoneMarks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Resource deleted successfully
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /bands:
+    get:
+      summary: List all bands
+      operationId: listBands
+      tags:
+        - bands
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+      responses:
+        '200':
+          description: A paged array of bands
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bands"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a band
+      operationId: createBand
+      tags:
+        - bands
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BandIn"
+      responses:
+        '201':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Band"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /bands/{id}:
+    get:
+      summary: Info for a specific bands
+      operationId: getBandById
+      tags:
+        - bands
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to retrieve
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Band"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete specific band by id
+      operationId: deleteBandById
+      tags:
+        - bands
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Resource deleted successfully
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /technologies:
+    get:
+      summary: List all technologies
+      operationId: listTechnologies
+      tags:
+        - technologies
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+      responses:
+        '200':
+          description: A paged array of technologies
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Technologies"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a technology
+      operationId: createTechnology
+      tags:
+        - technologies
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TechnologyIn"
+      responses:
+        '201':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Technology"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /technologies/{id}:
+    get:
+      summary: Info for a specific technology
+      operationId: getTechnologyById
+      tags:
+        - technologies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to retrieve
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Technology"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete specific technology by id
+      operationId: deleteTechnologyById
+      tags:
+        - technologies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Resource deleted successfully
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Roles:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Role"
+    RoleIn:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Tester
+    Role:
+      allOf:
+        - $ref: '#/components/schemas/RoleIn'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+
+    Users:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/User"
+    UserIn:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - middleName
+        - roleId
+        - phone
+        - email
+      properties:
+        firstName:
+          type: string
+          example: Василий
+        lastName:
+          type: string
+          example: Пупкин
+        middleName:
+          type: string
+          example: Веселович
+        roleId:
+          type: string
+          format: uuid
+        phone:
+          type: string
+          example: 79993336677
+          pattern: '^\d{11}$'
+        email:
+          type: string
+          format: email
+          example: vasiliy@pupkin.ru
+    User:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - middleName
+        - role
+        - phone
+        - email
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+          example: Василий
+        lastName:
+          type: string
+          example: Пупкин
+        middleName:
+          type: string
+          example: Веселович
+        role:
+          type: string
+          example: Tester
+        phone:
+          type: string
+          example: 79993336677
+          pattern: '^\d{11}$'
+        email:
+          type: string
+          format: email
+          example: vasiliy@pupkin.ru
+        createdAt:
+          type: string
+          format: date-time
+    PhoneMark:
+      allOf:
+        - $ref: '#/components/schemas/PhoneMarkIn'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+    PhoneMarkIn:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Samsung
+
+    PhoneModels:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/PhoneModel"
+    PhoneModelIn:
+      type: object
+      required:
+        - phoneMarkId
+        - name
+      properties:
+        phoneMarkId:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Galaxy S9
+    PhoneModel:
+      allOf:
+        - $ref: '#/components/schemas/PhoneModelIn'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+    PhoneMarks:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/PhoneMark"
+    SpecificPhones:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/SpecificPhone"
+    Phones:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Phone"
+    PhoneIn:
+      type: object
+      required:
+        - modelId
+        - technologyIds
+        - bandIds
+      properties:
+        modelId:
+          type: string
+          format: uuid
+        technologyIds:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+            format: uuid
+        bandIds:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+            format: uuid
+    SpecificPhoneIn:
+      type: object
+      required:
+        - id
+        - phoneId
+        - inventoryNumber
+      properties:
+        id:
+          type: string
+          format: uuid
+        phoneId:
+          type: string
+          format: uuid
+        inventoryNumber:
+          type: string
+          example: 'R125'
+    SpecificPhoneBookIn:
+      type: object
+      required:
+        #TODO: Remove me after spring-security module reused
+        - userId
+        - specificPhoneId
+      properties:
+        userId:
+          type: string
+          format: uuid
+        specificPhoneId:
+          type: string
+          format: uuid
+    SpecificPhoneBook:
+      type: object
+      required:
+        - id
+        - specificPhoneId
+        - createdAt
+        - returnedAt
+        - user
+      properties:
+        id:
+          type: string
+          format: uuid
+        specificPhoneId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        returnedAt:
+          type: string
+          format: date-time
+        user:
+          $ref: "#/components/schemas/User"
+    SpecificPhoneReturnIn:
+      type: object
+      required:
+        - specificPhoneId
+      properties:
+        specificPhoneId:
+          type: string
+          format: uuid
+    SpecificPhone:
+      type: object
+      required:
+        - id
+        - phoneId
+        - inventoryNumber
+        - state
+      properties:
+        id:
+          type: string
+          format: uuid
+        phoneId:
+          type: string
+          format: uuid
+        inventoryNumber:
+          type: string
+          example: 'R125'
+        state:
+          $ref: "#/components/schemas/SpecificPhoneState"
+    SpecificPhoneState:
+      type: object
+      required:
+        - isAvailable
+        - lastBookTime
+        - lastHolder
+      properties:
+        isAvailable:
+          type: boolean
+        lastBookTime:
+          type: string
+          format: date-time
+        lastHolder:
+          $ref: "#/components/schemas/User"
+    Phone:
+      type: object
+      required:
+        - id
+        - model
+        - technologies
+        - bands
+      properties:
+        id:
+          type: string
+          format: uuid
+        model:
+          type: string
+          example: Galaxy S9
+        technologies:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/Technology"
+        bands:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/Band"
+    TechnologyIn:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: CDMA
+    Technology:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: CDMA
+    Technologies:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Technology"
+    BandIn:
+      type: object
+      required:
+        - name
+        - subName
+        - channel
+      properties:
+        name:
+          type: string
+          example: 2G
+        subName:
+          type: string
+          example: CDMA
+        channel:
+          type: string
+          example: 1900
+    Band:
+      type: object
+      required:
+        - id
+        - name
+        - subName
+        - channel
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: 2G
+        subName:
+          type: string
+          example: CDMA
+        channel:
+          type: string
+          example: 1900
+    Bands:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Band"
+    Channel:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: n260
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
